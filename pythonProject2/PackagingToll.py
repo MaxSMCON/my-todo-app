@@ -72,23 +72,19 @@ def one_meat_checking(meat_id, result, ProdMeat, meat, req):
     p3_remaining = (p2_remaining + p3_ava) - p3_req
     p4_remaining = (p3_remaining + p4_ava) - p4_req
     if p1_remaining < 0:
-        dic = {'meat': meat_id, 'priority': 'p1n'}
-        dic['needed_pieces'] = p1_remaining * (-1)
+        dic = {'meat': meat_id, 'priority': 'p1n', 'needed_pieces': p1_remaining * (-1)}
         result.append(dic)
         print(len(result))
     if p2_remaining < 0:
-        dic = {'meat': meat_id, 'priority': 'p2'}
-        dic['needed_pieces'] = p2_remaining * (-1)
+        dic = {'meat': meat_id, 'priority': 'p2', 'needed_pieces': p2_remaining * (-1)}
         result.append(dic)
         print(len(result))
     if p3_remaining < 0:
-        dic = {'meat': meat_id, 'priority': 'p3'}
-        dic['needed_pieces'] = p3_remaining * (-1)
+        dic = {'meat': meat_id, 'priority': 'p3', 'needed_pieces': p3_remaining * (-1)}
         result.append(dic)
         print(len(result))
     if p4_remaining < 0:
-        dic = {'meat': meat_id, 'priority': 'p4'}
-        dic['needed_pieces'] = p4_remaining * (-1)
+        dic = {'meat': meat_id, 'priority': 'p4', 'needed_pieces': p4_remaining * (-1)}
         result.append(dic)
         print(len(result))
     return result
@@ -178,20 +174,16 @@ def activity_time_check(req, hour_priority, cap, seq):
         p3_rem = (p2_rem + p3_ava) - p3_req
         p4_rem = (p3_rem + p4_ava) - p4_req
         if p1_rem < 0:
-            dic = {'Activity': act, 'priority': 'p1'}
-            dic['needed_time'] = p1_rem * (-1)
+            dic = {'Activity': act, 'priority': 'p1', 'needed_time': p1_rem * (-1)}
             result.append(dic)
         if p2_rem < 0:
-            dic = {'Activity': act, 'priority': 'p2'}
-            dic['needed_time'] = p2_rem * (-1)
+            dic = {'Activity': act, 'priority': 'p2', 'needed_time': p2_rem * (-1)}
             result.append(dic)
         if p3_rem < 0:
-            dic = {'Activity': act, 'priority': 'p3'}
-            dic['needed_time'] = p3_rem * (-1)
+            dic = {'Activity': act, 'priority': 'p3', 'needed_time': p3_rem * (-1)}
             result.append(dic)
         if p4_rem < 0:
-            dic = {'Activity': act, 'priority': 'p4'}
-            dic['needed_time'] = p4_rem * (-1)
+            dic = {'Activity': act, 'priority': 'p4', 'needed_time': p4_rem * (-1)}
             result.append(dic)
 
     if len(result) == 0:
@@ -251,10 +243,8 @@ def arrange_one_meat(one_meat_hourly, one_meat_req, t_start, t_end, hour_priorit
     For meat that only has one sku related to it. Break into hourly plans
     """
     import math
-    pkg_dic = {}
-    pkg_dic['meatkey'] = one_meat_hourly.name  # get meat id
-    pkg_dic['itemkey'] = one_meat_req['itemkey'].values[0]
-    pkg_dic['itemdesc'] = one_meat_req['itemdesc'].values[0]
+    pkg_dic = {'meatkey': one_meat_hourly.name, 'itemkey': one_meat_req['itemkey'].values[0],
+               'itemdesc': one_meat_req['itemdesc'].values[0]}
     t = t_start
     # To track how many still need to be planed, once planed, the planed amount need to be subtracted from it
     needs_by_priority = {
@@ -563,10 +553,8 @@ def meat_split_combo_pkg(hour_priority, one_meat_hourly, one_meat_req_combo, one
     # calculate the meat required by combo and packaging floor (for each priority)
     piece_dist_byp = []  # piece distribution by priority
     for p in ['Priority1Qty', 'Priority2Qty', 'Priority3Qty', 'Priority4Qty']:
-        dic = {}
-        dic['priority'] = p
-        dic['combo'] = sum(one_meat_req_combo['PiecesInBox'] * one_meat_req_combo[p])
-        dic['pkg'] = sum(one_meat_req_pkg['PiecesInBox'] * one_meat_req_pkg[p])
+        dic = {'priority': p, 'combo': sum(one_meat_req_combo['PiecesInBox'] * one_meat_req_combo[p]),
+               'pkg': sum(one_meat_req_pkg['PiecesInBox'] * one_meat_req_pkg[p])}
         piece_dist_byp.append(dic)
     piece_dist_byp = pd.DataFrame(piece_dist_byp)
     piece_dist_byp_track = piece_dist_byp.loc[(piece_dist_byp['combo'] + piece_dist_byp['pkg']) != 0,]
@@ -752,11 +740,11 @@ def hourly_activity_time_check(hourly_req, cap, hour_priority, seq):
         # pass
         # return "Pass avtivity time checking!"
         # print("Pass avtivity time checking!")
-       time_comparison = pd.DataFrame([(22, 6726, 1, 1, 0)], columns={'hour',
+       time_comparison = pd.DataFrame([(22, 6726, 1, 1, 0)], columns=['hour',
                                                                       'Activity_Num',
                                                                       'time_required',
                                                                       'hourly_available_seconds',
-                                                                      'time_still_need'})
+                                                                      'time_still_need'])
        return time_comparison
     else:
         return time_comparison
@@ -867,7 +855,7 @@ def adjust_infeasible_plan(original_plan, req, cap, seq, hour_priority, adjustin
         current_hour = infeasible_table2[:1].hour.values[0]
         # return new_plan, infeasible_table2
 
-    return new_plan , infeasible_table2
+    return new_plan, infeasible_table2
     # else:
     #     return new_plan
         # else:
@@ -896,10 +884,7 @@ def get_best_plan(meat_and_req, meat_hourly, hour_priority, cap, seq, req, metho
     # Method1
     if len(method1_adjusting_rate_list) > 0:
         for adjusting_rate in method1_adjusting_rate_list:
-            dic = {}
-            dic['method'] = 'method1'
-            dic['combo_ratio'] = '-'
-            dic['adjusting_rate'] = adjusting_rate
+            dic = {'method': 'method1', 'combo_ratio': '-', 'adjusting_rate': adjusting_rate}
             print(dic['method'], dic['combo_ratio'], dic['adjusting_rate'])
 
             ### Method 1: evenly distributed(according to meat required)
@@ -936,10 +921,7 @@ def get_best_plan(meat_and_req, meat_hourly, hour_priority, cap, seq, req, metho
     if len(method2_combo_ratio_list) > 0:
         for combo_ratio in method2_combo_ratio_list:
             for adjusting_rate in method2_adjusting_rate_list:
-                dic = {}
-                dic['method'] = 'method2'
-                dic['combo_ratio'] = combo_ratio
-                dic['adjusting_rate'] = adjusting_rate
+                dic = {'method': 'method2', 'combo_ratio': combo_ratio, 'adjusting_rate': adjusting_rate}
                 print(dic['method'], dic['combo_ratio'], dic['adjusting_rate'])
 
                 ### Method 2: set a ratio first
