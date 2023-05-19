@@ -1,6 +1,15 @@
-#
-# todos = []
-#
+def get_todos(filepath='todos.txt'):
+    """read lines from provided file"""
+    with open(filepath, 'r') as file_local:
+        todos_local = file_local.readlines()
+    return todos_local
+
+# print(help(get_todos))
+def write_todos(todos_arg, filepath='todos.txt'):
+    """ Write the to do items list in the text file"""
+    with open(filepath, 'w') as file:
+        file.writelines(todos_arg)
+
 
 while True:
     user_action = input('Type add, show, edit, complete or exit: ')
@@ -8,19 +17,15 @@ while True:
 
     if user_action.startswith("add") or user_action.startswith('new'):
         todo = user_action[4:] + '\n'
-# Context manager
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
+
+        todos = get_todos()
 
         todos.append(todo)
 
-        with open('todos.txt', 'w') as file:
-            # file.writelines('\n'.join(todos))
-            file.writelines(todos)
+        write_todos(todos)
 
     elif user_action.startswith('show'):
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
+        todos = get_todos()
 
         for index, item in enumerate(todos):
             # Method 3 susing inside the for loop
@@ -35,14 +40,14 @@ while True:
             print(number)
             number = number - 1
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
+
             # print("Here is todos: ", todos)
             new_todo = input("Enter new todo: ")
             todos[number] = new_todo + '\n'
             # print("Here is the new todos: ", todos)
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+
+            write_todos(todos)
 
         except ValueError:
             print("Your command isn't valid")
@@ -53,14 +58,13 @@ while True:
         try:
             number = int(user_action[9:])
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
+
             index = number - 1
             todo_to_remove = todos[index].strip('\n')
             todos.pop(index)
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos(todos)
 
             message = f"Todo {todo_to_remove} was removed from the list."
             print(message)
