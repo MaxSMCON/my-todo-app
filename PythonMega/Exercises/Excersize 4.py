@@ -1,6 +1,6 @@
 
 
-file = open('essay.txt', 'r')
+file = open('../essay.txt', 'r')
 
 text = file.read()
 
@@ -13,7 +13,7 @@ print("number of characters: ", n_char)
 user_input = input("Add a new member: ")
 user_input.strip()
 
-mem = open('members.txt', 'r')
+mem = open('../members.txt', 'r')
 existing_members = mem.readlines()
 # print(text)
 mem.close()
@@ -21,7 +21,7 @@ mem.close()
 
 existing_members.append(user_input +"\n")
 
-mem = open('members.txt', 'w')
+mem = open('../members.txt', 'w')
 
 existing_members = mem.writelines(existing_members)
 file.close()
@@ -38,7 +38,7 @@ for text, file in zip(texts, files):
     file.write(text)
     print(text)
 
-file = open("data.txt", 'w')
+file = open("../data.txt", 'w')
 
 file.writelines("100.12 \n")
 file.writelines("111.23 \n")
@@ -46,6 +46,6 @@ file.writelines("111.23 \n")
 file.close()
 
 
-file = open("data.txt", 'r')
+file = open("../data.txt", 'r')
 file.write("100.12")
 file.close()
