@@ -1,4 +1,4 @@
-file_path = "journal/CoinFlip.txt"
+file_path = "../journal/CoinFlip.txt"
 while True:
     with open(file_path, "r") as file:
 
@@ -9,11 +9,11 @@ while True:
     match coin_flip:
         case 'head\n' | 'tail\n':
 
-            with open("journal/CoinFlip.txt", "r") as file:
+            with open("../journal/CoinFlip.txt", "r") as file:
                 coin_flips = file.readlines()
             coin_flips.append(coin_flip)
 
-            with open("journal/CoinFlip.txt", "w") as file:
+            with open("../journal/CoinFlip.txt", "w") as file:
                 file.writelines(coin_flips)
             nr_heads = coin_flips.count("head\n")
             percentage = nr_heads / len(coin_flips) * 100
