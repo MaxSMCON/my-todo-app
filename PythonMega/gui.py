@@ -1,6 +1,13 @@
 import functions
 import PySimpleGUI as sg
 import time
+import os
+# Line to create executable
+#   pyinstaller --onefile --window --clean FILE_NAME_py
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", 'w') as file:
+        pass
 
 sg.theme("Black")
 clock = sg.Text('', key='clock')
@@ -13,6 +20,9 @@ list_box = sg.Listbox(values=functions.get_todos(),
 edit_button = sg.Button("Edit")
 complete_button = sg.Button('Complete')
 exit_button = sg.Button('Exit')
+
+
+
 
 layout = [[clock],
         [label],
