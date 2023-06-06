@@ -6,7 +6,6 @@ def add_todo():
     todos.append(todo)
     functions.write_todos(todos)
 
-
 todos = functions.get_todos()
 
 st.title("My Todo App")
