@@ -21,6 +21,7 @@ def meat_pieces_check(ProdMeat, req, meat):
                                   how='left',
                                   validate='1:m'  # validates one to many connection
                                   ).MeatItem.drop_duplicates())
+
     # print(meat_id_list)
     for meat_id in meat_id_list:
         # if meat_id not in [412,803,901,902,413]:
